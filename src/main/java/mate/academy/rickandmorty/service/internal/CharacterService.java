@@ -9,7 +9,5 @@ public interface CharacterService {
 
     List<Character> findCharactersByName(String name);
 
-    void fillRepository();
-
     Character getRandomCharacter();
 }
