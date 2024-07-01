@@ -6,9 +6,14 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface CharacterRepository extends JpaRepository<Character, Long>,
         JpaSpecificationExecutor<Character> {
-    @Query(value = "SELECT c FROM characters c ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
-    Character getRandomCharacter();
+    @Query(value = "SELECT * FROM characters c ORDER BY RAND() LIMIT 1", nativeQuery = true)
+    Optional<Character> getRandomCharacter();
+
+    List<Character> findByNameContainingIgnoreCase(String name);
 }

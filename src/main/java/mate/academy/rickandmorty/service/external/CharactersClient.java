@@ -35,8 +35,9 @@ public class CharactersClient {
             RickAndMortyResponseDto dataDto = objectMapper.readValue(response.body(),
                     RickAndMortyResponseDto.class);
 
-            List<CharacterDtoExt> characterDtoExtList =
-                    new ArrayList<>(dataDto.getCharacterDtoExts());
+            List<CharacterDtoExt> characterDtoExtList = new ArrayList<>();
+
+            characterDtoExtList.addAll(dataDto.getCharacterDtoExts());
 
             String nextPageUrl = dataDto.getInfo().getNext();
 

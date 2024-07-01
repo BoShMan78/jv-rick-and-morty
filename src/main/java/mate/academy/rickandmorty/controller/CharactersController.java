@@ -9,6 +9,7 @@ import mate.academy.rickandmorty.service.internal.CharacterService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,18 +27,17 @@ public class CharactersController {
         this.characterRepository = characterRepository;
     }
 
-    @GetMapping
-    public List<CharacterDtoExt> getCharacters() {
-        List<CharacterDtoExt> characterDtoExts = charactersClient.getCharacters();
-        characterDtoExts.forEach(System.out::println);
-        return characterDtoExts;
-    }
-
-    @GetMapping("/{id}")
-    public CharacterDtoExt getCharacterById(@PathVariable Long id) {
-        CharacterDtoExt characterDtoExt = charactersClient.getCharacterById(id);
-        return characterDtoExt;
-    }
+//    @GetMapping
+//    public List<CharacterDtoExt> getCharacters() {
+//        List<CharacterDtoExt> characterDtoExts = charactersClient.getCharacters();
+//        return characterDtoExts;
+//    }
+//
+//    @GetMapping("/{id}")
+//    public CharacterDtoExt getCharacterById(@PathVariable Long id) {
+//        CharacterDtoExt characterDtoExt = charactersClient.getCharacterById(id);
+//        return characterDtoExt;
+//    }
 
     @GetMapping("/random")
     public Character getRandomCharacter() {
@@ -46,7 +46,7 @@ public class CharactersController {
     }
 
     @GetMapping("/search")
-    public List<Character> searchCharacters(@PathVariable String name) {
+    public List<Character> searchCharacters(@RequestParam String name) {
         fillRepository();
         return characterService.findCharactersByName(name);
     }
