@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class CharacterDtoExt {
+public class CharacterExternalDto {
     @JsonProperty("id")
     private Long externalId;
     private String name;

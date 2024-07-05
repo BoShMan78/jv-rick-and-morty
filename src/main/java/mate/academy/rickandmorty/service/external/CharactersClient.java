@@ -8,28 +8,29 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
-import mate.academy.rickandmorty.dto.external.CharacterDtoExt;
+import lombok.RequiredArgsConstructor;
+import mate.academy.rickandmorty.dto.external.CharacterExternalDto;
 import mate.academy.rickandmorty.dto.external.RickAndMortyResponseDto;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class CharactersClient {
-    private static final String BASE_URL = "https://rickandmortyapi.com/api/character";
     private final ObjectMapper objectMapper;
 
-    public CharactersClient(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
+    @Value("${rick-and-morty.url}")
+    private String baseUrl;
 
-    public List<CharacterDtoExt> getCharacters() {
+    public List<CharacterExternalDto> getCharacters() {
         HttpClient httpClient = HttpClient.newHttpClient();
-        List<CharacterDtoExt> characterDtoExtList = new ArrayList<>();
+        List<CharacterExternalDto> characterExternalDtoList = new ArrayList<>();
         RickAndMortyResponseDto dataDto;
         String additionUrl = "";
         String nextPageUrl;
         HttpResponse<String> response;
         do {
-            String url = BASE_URL + additionUrl;
+            String url = baseUrl + additionUrl;
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .GET()
                     .uri(URI.create(url))
@@ -40,12 +41,12 @@ public class CharactersClient {
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            characterDtoExtList.addAll(dataDto.getCharacterDtoExts());
+            characterExternalDtoList.addAll(dataDto.getCharacterExternalDtos());
             nextPageUrl = dataDto.getInfo().getNext();
             if (nextPageUrl != null) {
                 additionUrl = nextPageUrl.substring(nextPageUrl.indexOf('?'));
             }
         } while (nextPageUrl != null);
-        return characterDtoExtList;
+        return characterExternalDtoList;
     }
 }

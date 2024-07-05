@@ -8,5 +8,5 @@ import lombok.Data;
 public class RickAndMortyResponseDto {
     private Info info;
     @JsonProperty("results")
-    private List<CharacterDtoExt> characterDtoExts;
+    private List<CharacterExternalDto> characterExternalDtos;
 }
