@@ -13,7 +13,7 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
               - column:
-                  name: externalId
+                  name: external_id
                   type: bigint
               - column:
                   name: name
